@@ -13,14 +13,31 @@
 </head>
 
 <body class="text-white">
-    <div class="cover-container p-3 mx-auto" id="background">
-        <header class="mb-auto">
-            <h3 class="float-md-left mb-0"><a href="/posts" class="text-decoration-none text-light">9Gig</a></h3>
-            <nav class="nav nav-masthead justify-content-center float-md-left">
-                <a class="nav-link text-light" href="/posts">Posts</a>
-                <a class="nav-link text-light" href="/posts/new">New Posts</a>
-            </nav>
-        </header>
+    <div class="cover-container" id="background">
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/posts">9Gig</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="/posts">Posts</a>
+                        <a class="nav-link" href="/posts/new">New Post</a>
+                    </div>
+                    <div class="navbar-nav ml-auto">
+                        <% if(!currentUser) { %> 
+                        <a class="nav-link" href="/login">Login</a>
+                        <a class="nav-link" href="/register">Register</a>
+                        <% } else { %> 
+                        <a class="nav-link" href="/profile">Welcome, <%=currentUser.username.toUpperCase() %> </a>
+                        <a class="nav-link" href="/logout">Logout</a>
+                        <% } %> 
+                    </div>
+                </div>
+            </div>
+        </nav>
     </div>
     <div class="text-center" id="message">
         <h1>404</h1>
