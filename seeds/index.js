@@ -23,7 +23,8 @@ const seedDB = async () => {
             title: `Post ${i}`,
             description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam rerum minus sint doloremque velit quod nihil vel aut unde tenetur nobis, voluptates eaque expedita necessitatibus enim ducimus iure blanditiis placeat? Inventore nam ea fugiat at in reprehenderit cupiditate error id quas voluptates, quis eos placeat. Dolorem ipsa sapiente molestiae aliquam voluptates quas incidunt obcaecati, in, nam culpa, illum placeat iusto!',
             upvote: randUp,
-            downvote: randDown
+            downvote: randDown,
+            author: '60e29f28e5753e07e84f5da8'
         })
         await post.save()
     }

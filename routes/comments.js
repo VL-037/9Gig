@@ -10,6 +10,7 @@ router.post('/', isLoggedIn, async (req, res) => {
         res.render('errors/404')
     } else {
         const comment = new Comment(req.body.comment)
+        comment.author = req.user._id;
         post.comments.push(comment)
         await comment.save()
         await post.save()

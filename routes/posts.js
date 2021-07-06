@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Post = require('../models/post');
-const { isLoggedIn } = require('../middleware')
+const { isLoggedIn } = require('../middleware');
 
 router.get('/', async (req, res) => {
     const posts = await Post.find({}).sort().sort({ createdAt: 'desc' })
@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', isLoggedIn, async (req, res) => {
     const post = new Post(req.body.post)
+    post.author = req.user._id
     await post.save()
     req.flash('success', 'Post created!')
     res.redirect(`/posts/${post._id}`)
@@ -21,10 +22,21 @@ router.get('/new', isLoggedIn, (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id).populate('comments')
+        let post = await Post.findById(req.params.id).populate({
+            path: 'comments',
+            populate: {
+                path: 'author'
+            }
+        }).populate('author')
         if (!post) {
             res.render('errors/404')
         } else {
+            post = await Post.findById(req.params.id).populate({
+                path: 'comments',
+                populate: {
+                    path: 'author'
+                }
+            }).populate('author')
             res.render('posts/show', { post })
         }
     } catch (e) {

@@ -1,58 +1,87 @@
 <% layout('layout/boilerplate') %>
-<div class="card mb-3">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="card-title"><b>
-                        <%= post.title %>
-                    </b> </h5>
-            </div>
-    
-            <div class="card-body">
-                <p class="card-text">
-                    <%= post.description %>
-                </p>
-                <button class="btn btn-secondary">&#10224; <%=post.upvote || 0 %> </button>
-                <button class="btn btn-secondary">&#10225; <%=post.downvote || 0 %> </button>
-                <a class="card-link btn btn-info" style="color: white;" href="/posts/<%=post._id%>/edit">EDIT</a>
-                <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger">DELETE</button>
-                </form>
+
+<div class="mx-auto">
+    <div class="card mb-3">
+        <div class="row ">
+            <div class="col">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <b><%= post.title %></b>
+                    </h5>
+                    <p class="card-text">
+                        <%= post.description %>
+                    </p>
+                    <button class="btn btn-secondary">&#10224; <%=post.upvote || 0 %> </button>
+                    <button class="btn btn-secondary">&#10225; <%=post.downvote || 0 %> </button>
+                    <% if(currentUser && currentUser._id.equals(post.author._id)) { %> 
+                    <a class="card-link btn btn-info" style="color: white;"
+                        href="/posts/<%=post._id%>/edit">Edit</a>
+                    <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                    <% } %> 
+                </div>
             </div>
         </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Posted at: <%=moment(post.createdAt).format('MMMM Do YYYY')%></li>
+            <li class="list-group-item">OP: 
+                <a href="/users/<%=post.author._id%>" class="text-decoration-none text-dark">
+                    <b>@<%=post.author.username%></b>
+                </a>
+            </li>
+        </ul>
     </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">Created at: <%=moment(post.createdAt).format('MMMM Do YYYY')%> </li>
-    </ul>
-</div>
 
-<div class="card mb-3">
-    <div class="card-body">
-        <h5 class="card-title">
-            <%=(post.comments) ? post.comments.length : 0 %> Comments</h5>
-        <hr>
-        <form action="/posts/<%=post._id%>/comments/" method="POST" novalidate class="mb-3 form-validation">
-            <div class="mb-3">
-                <textarea class="form-control" name="comment[body]" id="body" cols="30" rows="4"
-                    placeholder="Write a comment..." required></textarea>
-                <div class="invalid-feedback">
-                    Must write a comment
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">
+                <%=(post.comments) ? post.comments.length : 0 %> Comments
+            </h5>
+            <hr>
+            <form action="/posts/<%=post._id%>/comments/" method="POST" novalidate class="mb-3 form-validation">
+                <div class="mb-3">
+                    <% if(currentUser) { %>
+                    <textarea class="form-control mb-3" name="comment[body]" id="body" cols="30" rows="4"
+                        placeholder="Write a comment..." required></textarea>
+                    <div class="invalid-feedback">
+                        Must write a comment
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-success">Post</button>
+                    </div>
+                    <% } else { %>
+                    <textarea class="form-control mb-3" name="comment[body]" id="body" cols="30" rows="4"
+                        placeholder="Login to comment a post..." required disabled></textarea>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-success" disabled>Post</button>
+                    </div>
+                    <% } %>
                 </div>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-success">Post</button>
-            </div>
-        </form>
-        <div class="card mb-3">
-            <% for(let comment of post.comments) { %> 
+            </form>
+            <div class="card mb-3">
+                <% for(let comment of post.comments) { %>
                 <div class="card-body">
                     <hr>
-                    <p class="card-text"><%= comment.body %></p>
+                    <h5>
+                        <a class="text-decoration-none text-dark" href="/users/<%=comment.author._id%> ">
+                            <b>@<%=comment.author.username%></b>
+                        </a>
+                            <% if(comment.author._id.equals(post.author._id)) { %>
+                                <b>(OP)</b>
+                            <% } %> 
+                    </h5>
+                    <p class="card-text">
+                        <%= comment.body %>
+                    </p>
+                    <% if(currentUser && currentUser._id.equals(comment.author._id)) { %> 
                     <form class="d-inline" action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                        <button class="btn btn-danger">DELETE</button>
+                        <button class="btn btn-danger">Delete comment</button>
                     </form>
+                    <% } %> 
                 </div>
-            <% } %> 
+                <% } %>
+            </div>
         </div>
     </div>
 </div>
