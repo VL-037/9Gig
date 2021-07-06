@@ -1,5 +1,5 @@
 const express = require('express')
-const router = express.Router()
+const router = express.Router({ mergeParams: true })
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 const { isLoggedIn } = require('../middleware')
@@ -13,6 +13,7 @@ router.post('/', isLoggedIn, async (req, res) => {
         post.comments.push(comment)
         await comment.save()
         await post.save()
+        req.flash('success', 'Comment added')
         res.redirect(`/posts/${post._id}`)
     }
 })
@@ -25,6 +26,7 @@ router.delete('/:commentId', isLoggedIn, async (req, res) => {
     } else {
         await Post.findByIdAndUpdate(id, { $pull: { comments: commentId } })
         await Comment.findByIdAndDelete(commentId)
+        req.flash('success', 'Comment deleted')
         res.redirect(`/posts/${post._id}`)
     }
 })
