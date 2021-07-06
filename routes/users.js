@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
+const { isLoggedIn } = require('../middleware')
 const User = require("../models/user")
 
 router.get('/register', (req, res) => {
@@ -25,6 +26,12 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), async (req, res) => {
+    res.redirect('/posts')
+})
+
+router.get('/logout', isLoggedIn, (req, res) => {
+    req.logout()
+    req.flash('success', "Successfully logged out, don't forget to comeback :D")
     res.redirect('/posts')
 })
 
