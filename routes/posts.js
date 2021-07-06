@@ -7,6 +7,7 @@ router.get('/', async (req, res) => {
     const posts = await Post.find({}).sort().sort({ createdAt: 'desc' })
     res.render('posts/index', { posts })
 })
+
 router.post('/', isLoggedIn, async (req, res) => {
     const post = new Post(req.body.post)
     await post.save()
@@ -15,11 +16,6 @@ router.post('/', isLoggedIn, async (req, res) => {
 })
 
 router.get('/new', isLoggedIn, (req, res) => {
-    if(!req.isAuthenticated()){
-        req.flash('error', 'You must be logged in to create a post')
-        return res.redirect('/login')
-    }
-
     res.render('posts/new')
 })
 
@@ -43,6 +39,7 @@ router.put('/:id', isLoggedIn, async (req, res) => {
     } else {
         await Post.findByIdAndUpdate(req.params.id, { ...req.body.post })
         await post.save()
+        req.flash('success', 'Post updated!')
         res.redirect(`/posts/${req.params.id}`)
     }
 })
@@ -53,6 +50,7 @@ router.delete('/:id', isLoggedIn, async (req, res) => {
         res.render('errors/404')
     } else {
         await Post.findByIdAndDelete(req.params.id)
+        req.flash('success', 'Post deleted!')
         res.redirect(`/posts`)
     }
 })
