@@ -2,7 +2,7 @@
 <div class="row">
     <h1 class="text-center">New Post</h1>
     <div class="col-6 offset-3">
-        <form action="/posts" method="POST" novalidate class="form-validation">
+        <form action="/posts" method="POST" novalidate class="form-validation" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="title">Title</label>
                 <input class="form-control" type="text" id="title" name="post[title]" required>
@@ -15,21 +15,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label" for="descrpition">Description</label>
-                <textarea class="form-control" name="post[description]" id="descrpition" cols="30" rows="5"
-                    required></textarea>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-                <div class="invalid-feedback">
-                    Input the description please
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <!-- <label class="form-label" for="image">Image</label>
-                <input class="form-control" type="text" id="image" name="post[image]" required> -->
-                <input type="file" name="image" id="image">
+                <input type="file" name="image" id="image" multiple>
                 <div class="valid-feedback">
                     Looks good!
                 </div>
