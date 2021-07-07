@@ -1,8 +1,8 @@
 <% layout('layout/boilerplate')%>
 
-<div class="mx-auto w-50">
+<div class="mx-auto">
     <% for (let post of posts){%>
-        <div class="card mb-3">
+        <div class="card mb-3 shadow-lg">
             <div class="row">
                 <div class="col">
                     <div class="card-body">
@@ -11,7 +11,11 @@
                                 <a href="/posts/<%=post._id%>" class="text-decoration-none text-dark"><%= post.title %></a>
                             </b>
                         </h5>
-                        <p class="card-text"><%= post.description %></p>
+                        <div class="mb-3">
+                            <% for(let img of post.images) { %> 
+                            <img src="<%=img.url%>" class="card-img-top" alt="">
+                            <% } %>
+                        </div>
                         <button class="btn btn-secondary">&#10224; <%=post.upvote || 0 %> </button>
                         <button class="btn btn-secondary">&#10225; <%=post.downvote || 0 %> </button>
                         <a class="btn btn-secondary" href="/posts/<%=post._id%>"><i class="fa fa-comments-o"></i> <%=(post.comments) ? post.comments.length : 0 %></a>

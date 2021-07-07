@@ -5,12 +5,14 @@
         <div class="row ">
             <div class="col">
                 <div class="card-body">
-                    <h5 class="card-title">
+                    <h5 class="card-title mb-3">
                         <b><%= post.title %></b>
                     </h5>
-                    <p class="card-text">
-                        <%= post.description %>
-                    </p>
+                    <div class="mb-3">
+                        <% for(let img of post.images) { %> 
+                        <img src="<%=img.url%>" class="card-img-top" alt="">
+                        <% } %>
+                    </div>
                     <button class="btn btn-secondary">&#10224; <%=post.upvote || 0 %> </button>
                     <button class="btn btn-secondary">&#10225; <%=post.downvote || 0 %> </button>
                     <% if(currentUser && currentUser._id.equals(post.author._id)) { %> 
