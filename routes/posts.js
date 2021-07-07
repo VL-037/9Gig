@@ -1,79 +1,19 @@
 const express = require('express')
 const router = express.Router()
-const Post = require('../models/post');
+const posts = require('../controllers/posts');
 const { isLoggedIn } = require('../middleware');
 
-router.get('/', async (req, res) => {
-    const posts = await Post.find({}).sort().sort({ createdAt: 'desc' })
-    res.render('posts/index', { posts })
-})
+router.route('/')
+    .get(posts.index)
+    .post(isLoggedIn, posts.createPost)
 
-router.post('/', isLoggedIn, async (req, res) => {
-    const post = new Post(req.body.post)
-    post.author = req.user._id
-    await post.save()
-    req.flash('success', 'Post created!')
-    res.redirect(`/posts/${post._id}`)
-})
+router.get('/new', isLoggedIn, posts.renderNewForm)
 
-router.get('/new', isLoggedIn, (req, res) => {
-    res.render('posts/new')
-})
+router.get('/:id/edit', isLoggedIn, posts.renderEditForm)
 
-router.get('/:id', async (req, res) => {
-    try {
-        let post = await Post.findById(req.params.id).populate({
-            path: 'comments',
-            populate: {
-                path: 'author'
-            }
-        }).populate('author')
-        if (!post) {
-            res.render('errors/404')
-        } else {
-            post = await Post.findById(req.params.id).populate({
-                path: 'comments',
-                populate: {
-                    path: 'author'
-                }
-            }).populate('author')
-            res.render('posts/show', { post })
-        }
-    } catch (e) {
-        return res.render('errors/404')
-    }
-})
-
-router.put('/:id', isLoggedIn, async (req, res) => {
-    const post = await Post.findById(req.params.id)
-    if (!post) {
-        res.render('errors/404')
-    } else {
-        await Post.findByIdAndUpdate(req.params.id, { ...req.body.post })
-        await post.save()
-        req.flash('success', 'Post updated!')
-        res.redirect(`/posts/${req.params.id}`)
-    }
-})
-
-router.delete('/:id', isLoggedIn, async (req, res) => {
-    const post = await Post.findById(req.params.id)
-    if (!post) {
-        res.render('errors/404')
-    } else {
-        await Post.findByIdAndDelete(req.params.id)
-        req.flash('success', 'Post deleted!')
-        res.redirect(`/posts`)
-    }
-})
-
-router.get('/:id/edit', isLoggedIn, async (req, res) => {
-    const post = await Post.findById(req.params.id)
-    if (!post) {
-        res.render('errors/404')
-    } else {
-        res.render('posts/edit', { post })
-    }
-})
+router.route('/:id')
+    .get(posts.showPost)
+    .put(isLoggedIn, posts.updatePost)
+    .delete(isLoggedIn, posts.deletePost)
 
 module.exports = router
