@@ -1,8 +1,10 @@
+if(process.env.NODE_ENV !== 'production')
+    require("dotenv").config()
+
 const express = require('express')
 const app = express();
 const path = require('path')
 const ejsMate = require('ejs-mate')
-const dotenv = require("dotenv").config()
 const methodOverride = require('method-override');
 const moment = require('moment')
 const session = require('express-session')
@@ -10,6 +12,7 @@ const flash = require('connect-flash')
 const mongoose = require('mongoose');
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
+
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/9gig'
 
 const User = require('./models/user')
@@ -42,7 +45,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'static')))
 
-const SECRET = process.env.SECRET || 'thiscantbeagoodsecrettoaccess9Gig'
+const SECRET = process.env.CLOUDINARY_SECRET || 'thiscantbeagoodsecrettoaccess9Gig'
 const sessionConfig = {
     secret: SECRET,
     resave: false,
