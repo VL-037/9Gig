@@ -9,8 +9,7 @@ const ImageSchema = new Schema({
 
 const PostSchema = new Schema({
     title: String,
-    description: String,
-    image: [ImageSchema],
+    images: [ImageSchema],
     upvote: Number,
     downvote: Number,
     author: {
