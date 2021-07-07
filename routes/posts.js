@@ -2,11 +2,14 @@ const express = require('express')
 const router = express.Router()
 const posts = require('../controllers/posts');
 const { isLoggedIn } = require('../middleware');
+const multer = require('multer')
+const { storage } = require('../cloudinary/index')
+const upload = multer({ storage })
 
 router.route('/')
     .get(posts.index)
-    .post(isLoggedIn, posts.createPost)
-
+    .post(isLoggedIn, upload.array('image'), posts.createPost)
+    
 router.get('/new', isLoggedIn, posts.renderNewForm)
 
 router.get('/:id/edit', isLoggedIn, posts.renderEditForm)
