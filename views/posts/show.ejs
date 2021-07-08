@@ -13,8 +13,8 @@
                         <img src="<%=img.url%>" class="card-img-top" alt="">
                         <% } %>
                     </div>
-                    <button class="btn btn-secondary">&#10224; <%=post.upvote.length %> </button>
-                    <button class="btn btn-secondary">&#10225; <%=post.downvote.length %> </button>
+                    <button class="btn btn-secondary">&#10224; <%=post.upvote || 0 %> </button>
+                    <button class="btn btn-secondary">&#10225; <%=post.downvote || 0 %> </button>
                     <% if(currentUser && currentUser._id.equals(post.author._id)) { %> 
                     <a class="card-link btn btn-info" style="color: white;"
                         href="/posts/<%=post._id%>/edit">Edit</a>
@@ -38,7 +38,7 @@
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">
-                <%=post.comments.length%> Comments
+                <%=(post.comments) ? post.comments.length : 0 %> Comments
             </h5>
             <hr>
             <form action="/posts/<%=post._id%>/comments/" method="POST" novalidate class="mb-3 form-validation">

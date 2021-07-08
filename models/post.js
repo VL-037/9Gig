@@ -10,18 +10,8 @@ const ImageSchema = new Schema({
 const PostSchema = new Schema({
     title: String,
     images: [ImageSchema],
-    upvote: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }
-    ],
-    downvote: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }
-    ],
+    upvote: Number,
+    downvote: Number,
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'
