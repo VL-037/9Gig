@@ -12,11 +12,12 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label" for="descrpition">Description</label>
-                <textarea class="form-control" name="post[description]" id="descrpition" cols="30" rows="10"
-                    required><%=post.description%> </textarea>
+                <input type="file" name="image" id="image" multiple>
                 <div class="valid-feedback">
                     Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Input some memes
                 </div>
             </div>
 
