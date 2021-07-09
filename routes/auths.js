@@ -8,7 +8,8 @@ router.get(
     '/google/callback', 
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
-        res.redirect('/posts')
+        const redirectUrl = req.session.requestedUrl || '/posts'
+        res.redirect(redirectUrl)
     })
 
 module.exports = router
