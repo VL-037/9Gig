@@ -1,4 +1,5 @@
 const Post = require('../models/post')
+const { cloudinary } = require('../cloudinary')
 
 module.exports.index = async (req, res) => {
     const posts = await Post.find({}).sort().sort({ createdAt: 'desc' })
@@ -68,6 +69,9 @@ module.exports.deletePost = async (req, res) => {
     if (!post) {
         res.render('errors/404')
     } else {
+        for(let image of post.images){
+            await cloudinary.uploader.destroy(image.filename)
+        }
         await Post.findByIdAndDelete(req.params.id)
         req.flash('success', 'Post deleted!')
         res.redirect(`/posts`)

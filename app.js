@@ -13,6 +13,8 @@ const mongoose = require('mongoose');
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 
+require('./passport')(passport)
+
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/9gig'
 
 const User = require('./models/user')
@@ -20,6 +22,7 @@ const User = require('./models/user')
 const postRoutes = require('./routes/posts')
 const commentRoutes = require('./routes/comments')
 const userRoutes = require('./routes/users')
+const authRoutes = require('./routes/auths')
 
 app.use((req, res, next) => {
     res.locals.moment = moment;
@@ -76,6 +79,7 @@ app.use((req, res, next) => {
 app.use('/', userRoutes)
 app.use('/posts', postRoutes)
 app.use('/posts/:id/comments', commentRoutes)
+app.use('/auth', authRoutes)
 
 app.get('/', (req, res) => {
     res.render('home')

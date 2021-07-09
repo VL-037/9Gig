@@ -1,0 +1,15 @@
+#posts{
+    max-width: 70%;
+}
+#btn-login-google{
+    background-color: #dd4b39;
+}
+#btn-login-fb{
+    background-color: #3b5998;
+}
+
+@media (max-width: 800px) {
+    #posts{
+        max-width: 100%;
+    }
+}
