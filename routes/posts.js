@@ -20,4 +20,7 @@ router.route('/:id')
     .put(isLoggedIn, posts.updatePost)
     .delete(isLoggedIn, posts.deletePost)
 
+router.put('/:id/vote-up', isLoggedIn, posts.upvotePost)
+router.put('/:id/vote-down', isLoggedIn, posts.downvotePost)
+
 module.exports = router
