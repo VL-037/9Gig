@@ -6,6 +6,7 @@ const multer = require('multer')
 const { storage } = require('../cloudinary/index')
 const upload = multer({ storage })
 
+
 router.route('/')
     .get(posts.index)
     .post(isLoggedIn, upload.array('image'), posts.createPost)
