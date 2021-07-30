@@ -11,7 +11,6 @@ router.get(
         const redirectUrl = req.session.requestedUrl || '/posts'
         delete req.session.requestedUrl
         res.redirect(redirectUrl)
-        res.redirect('/posts')
     })
 
 module.exports = router
