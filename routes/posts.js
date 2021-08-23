@@ -13,6 +13,8 @@ router.route('/')
     
 router.get('/new', isLoggedIn, posts.renderNewForm)
 
+router.get('/random', posts.randomPost)
+
 router.get('/:id/edit', isLoggedIn, posts.renderEditForm)
 
 router.route('/:id')
