@@ -34,46 +34,46 @@
                             <%  if(post.upvote.includes(currUser._id)) { %>
                                 <form class="upvote-form d-inline" data-id="<%=post._id%>">
                                     <button class="btn btn-primary btn-upvote" type="submit" id="<%=post._id%>upbtn">&#10224;
-                                        <span id="upvote-value" class="vote-value"><%=post.upvoteNum%></span>
+                                        <span class="upvote-value" id="<%=post._id%>upspan"><%=post.upvoteNum%></span>
                                     </button>
                                 </form>
                                 <form class="downvote-form d-inline" data-id="<%=post._id%>">
                                     <button class="btn btn-secondary btn-downvote" type="submit" id="<%=post._id%>downbtn">&#10225;
-                                        <span id="downvote-value" class="vote-value"><%=post.downvoteNum%></span>
+                                        <span class="downvote-value" id="<%=post._id%>downspan"><%=post.downvoteNum%></span>
                                     </button>
                                 </form>
                             <% } else if(post.downvote.includes(currUser._id)) { %> 
                                 <form class="upvote-form d-inline" data-id="<%=post._id%>">
                                     <button class="btn btn-secondary btn-upvote" type="submit" id="<%=post._id%>upbtn">&#10224;
-                                        <span id="upvote-value" class="vote-value"><%=post.upvoteNum%></span>
+                                        <span class="upvote-value" id="<%=post._id%>upspan"><%=post.upvoteNum%></span>
                                     </button>
                                 </form>
                                 <form class="downvote-form d-inline" data-id="<%=post._id%>">
                                     <button class="btn btn-primary btn-downvote" type="submit" id="<%=post._id%>downbtn">&#10225;
-                                        <span id="downvote-value" class="vote-value"><%=post.downvoteNum%></span>
+                                        <span class="downvote-value" id="<%=post._id%>downspan"><%=post.downvoteNum%></span>
                                     </button>
                                 </form>
                             <% } else { %>
                                 <form class="upvote-form d-inline" data-id="<%=post._id%>">
                                     <button class="btn btn-secondary btn-upvote" type="submit" id="<%=post._id%>upbtn">&#10224;
-                                        <span id="upvote-value" class="vote-value"><%=post.upvoteNum%></span>
+                                        <span class="upvote-value" id="<%=post._id%>upspan"><%=post.upvoteNum%></span>
                                     </button>
                                 </form>
                                 <form class="downvote-form d-inline" data-id="<%=post._id%>">
                                     <button class="btn btn-secondary btn-downvote" type="submit" id="<%=post._id%>downbtn">&#10225;
-                                        <span id="downvote-value" class="vote-value"><%=post.downvoteNum%></span>
+                                        <span class="downvote-value" id="<%=post._id%>downspan"><%=post.downvoteNum%></span>
                                     </button>
                                 </form>
                             <% } %> 
                         <% } else { %> 
                             <form class="upvote-form d-inline" data-id="<%=post._id%>" data-toggle="tooltip" data-placement="bottom" title="gotta login to vote">
-                                <button class="btn btn-secondary btn-upvote disabled" type="submit" id="<%=post._id%>upbtn">&#10224;
-                                    <span id="upvote-value" class="vote-value"><%=post.upvoteNum%></span>
+                                <button class="btn btn-secondary btn-upvote disabled" type="submit"&#10224;
+                                    <span class="upvote-value" ><%=post.upvoteNum%></span>
                                 </button>
                             </form>
                             <form class="downvote-form d-inline" data-id="<%=post._id%>" data-toggle="tooltip" data-placement="bottom" title="gotta login to vote">
-                                <button class="btn btn-secondary btn-downvote disabled" type="submit" id="<%=post._id%>downbtn">&#10225;
-                                    <span id="downvote-value" class="vote-value"><%=post.downvoteNum%></span>
+                                <button class="btn btn-secondary btn-downvote disabled" type="submit">&#10225;
+                                    <span class="downvote-value"><%=post.downvoteNum%></span>
                                 </button>
                             </form>
                         <% } %> 

@@ -7,11 +7,24 @@ $(document).ready(function() {
         e.preventDefault();
         const postId = $(this).data('id').trim()
         const btnId = $(this).find("input[type=submit]:focus").prevObject[0][0].id
+        const upSpan = $(this).find('span')
+        const downSpan = $('.downvote-form').find(`span[id=${postId}downspan]`)
+
+        let upvoteNum = parseInt(upSpan.text())
+        let downvoteNum = parseInt(downSpan.text())
         
-        if($('#' + postId + 'downbtn').hasClass('btn-primary'))
+        if($('#' + postId + 'upbtn').hasClass('btn-primary')) upvoteNum--
+        else upvoteNum++
+
+        if($('#' + postId + 'downbtn').hasClass('btn-primary')){
             $('#' + postId + 'downbtn').toggleClass('btn-primary btn-secondary');
+            downvoteNum--
+        }
 
         $('#' + btnId).toggleClass('btn-primary btn-secondary')
+        
+        upSpan.text(upvoteNum)
+        downSpan.text(downvoteNum)
         
         if((window.location.href).includes('posts/' + postId)){
             $.ajax({
@@ -30,11 +43,24 @@ $(document).ready(function() {
         e.preventDefault();
         const postId = $(this).data('id').trim()
         const btnId = $(this).find("input[type=submit]:focus").prevObject[0][0].id
+        const upSpan = $('.upvote-form').find(`span[id=${postId}upspan]`)
+        const downSpan = $(this).find('span')
 
-        if($('#' + postId + 'upbtn').hasClass('btn-primary'))
+        let upvoteNum = parseInt(upSpan.text())
+        let downvoteNum = parseInt(downSpan.text())
+
+        if($('#' + postId + 'downbtn').hasClass('btn-primary')) downvoteNum--
+        else downvoteNum++
+
+        if($('#' + postId + 'upbtn').hasClass('btn-primary')){
             $('#' + postId + 'upbtn').toggleClass('btn-primary btn-secondary');
+            upvoteNum--
+        }
 
         $('#' + btnId).toggleClass('btn-primary btn-secondary')
+
+        upSpan.text(upvoteNum)
+        downSpan.text(downvoteNum)
 
         if((window.location.href).includes('posts/' + postId)){
             $.ajax({
