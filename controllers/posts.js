@@ -49,6 +49,20 @@ module.exports.showPost = async (req, res) => {
     }
 }
 
+module.exports.randomPost = async (req, res) => {
+    const postsCount = await Post.estimatedDocumentCount()
+    const random = Math.floor(Math.random() * postsCount)
+    const currUser = req.user
+    const post = await Post.findOne().skip(random).populate({
+        path: 'comments',
+        populate: {
+            path: 'author'
+        }
+    }).populate('author')
+
+    res.render('posts/show', { post, currUser })
+}
+
 module.exports.renderEditForm = async (req, res) => {
     const post = await Post.findById(req.params.id)
     if (!post) {
