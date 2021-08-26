@@ -9,8 +9,9 @@ module.exports.index = async (req, res) => {
     res.render('posts/index', { posts, tags, currUser })
 }
 
-module.exports.renderNewForm = (req, res) => {
-    res.render('posts/new')
+module.exports.renderNewForm = async (req, res) => {
+    const tags = await Tag.find({})
+    res.render('posts/new', { tags })
 }
 
 module.exports.createPost = async (req, res) => {

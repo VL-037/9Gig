@@ -4,6 +4,16 @@
 li{
     list-style-type: none;
 }
+.tag-form{
+    display: none;
+}
+.tag-invalid-feedback{
+    display: none;
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
 
 .main-container{
     max-width: 1200px;
