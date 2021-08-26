@@ -37,12 +37,18 @@ const PostSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Comment'
         }
+    ],
+    tags: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Tag'
+        }
     ]
 })
 
 //middleware for delete all comments when deleting a post
-PostSchema.post('findOneAndDelete', async(post) => {
-    if(post){
+PostSchema.post('findOneAndDelete', async (post) => {
+    if (post) {
         await Comment.deleteMany({
             _id: {
                 $in: post.comments
