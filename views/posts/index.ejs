@@ -1,11 +1,13 @@
 <% layout('layout/boilerplate')%>
 
+<%- include('../partials/panel-left')%>
 <div class="mx-auto" id="posts">
     <% for (let post of posts){%>
         <div class="card mb-3 shadow-lg">
             <div class="row">
                 <div class="col">
                     <div class="card-body">
+                        <a href="<%=post.tags[0].url%> "><div class="btn btn-dark btn-sm tags"><%=post.tags[0].body%></div></a>
                         <h5 class="card-title">
                             <b>
                                 <a href="/posts/<%=post._id%>" class="text-decoration-none text-dark" data-placement="top"><%= post.title %></a>
@@ -84,3 +86,4 @@
         </div>
     <% }%>
 </div>
+<%- include('../partials/panel-right')%>

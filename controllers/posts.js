@@ -1,10 +1,12 @@
 const Post = require('../models/post')
+const Tag = require('../models/tag')
 const { cloudinary } = require('../cloudinary')
 
 module.exports.index = async (req, res) => {
-    const posts = await Post.find({}).sort().sort({ createdAt: 'desc' })
+    const posts = await Post.find({}).sort().sort({ createdAt: 'desc' }).populate('tags')
+    const tags = await Tag.find({})
     const currUser = req.user
-    res.render('posts/index', { posts, currUser })
+    res.render('posts/index', { posts, tags, currUser })
 }
 
 module.exports.renderNewForm = (req, res) => {
@@ -25,24 +27,20 @@ module.exports.createPost = async (req, res) => {
 }
 
 module.exports.showPost = async (req, res) => {
+    const tags = await Tag.find({})
     try {
-        let post = await Post.findById(req.params.id).populate({
-            path: 'comments',
-            populate: {
-                path: 'author'
-            }
-        }).populate('author')
+        let post = await Post.findById(req.params.id)
         if (!post) {
             res.render('errors/404')
         } else {
             const currUser = req.user
-            post = await Post.findById(req.params.id).populate({
+            post = await Post.findById(req.params.id).populate('tags').populate('author').populate({
                 path: 'comments',
                 populate: {
                     path: 'author'
                 }
-            }).populate('author')
-            res.render('posts/show', { post, currUser })
+            })
+            res.render('posts/show', { post, tags, currUser })
         }
     } catch (e) {
         return res.render('errors/404')

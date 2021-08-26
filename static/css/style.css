@@ -13,6 +13,10 @@ li{
     top: 60px;
 }
 
+.tags{
+    font-size: 12px;
+}
+
 #posts{
     max-width: 60%;
 }
