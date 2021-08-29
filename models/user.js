@@ -6,7 +6,11 @@ const UserSchema = new Schema({
     googleId: String,
     image: String,
     email: String,
-    username: String
+    username: String,
+    role: {
+        type: String,
+        default: "user"
+    }
 })
 
 UserSchema.plugin(passportLocalMongoose)
