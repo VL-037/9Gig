@@ -23,6 +23,7 @@ const postRoutes = require('./routes/posts')
 const commentRoutes = require('./routes/comments')
 const userRoutes = require('./routes/users')
 const authRoutes = require('./routes/auths')
+const tagRoutes = require('./routes/tags')
 
 app.use((req, res, next) => {
     res.locals.moment = moment;
@@ -80,6 +81,7 @@ app.use('/', userRoutes)
 app.use('/posts', postRoutes)
 app.use('/posts/:id/comments', commentRoutes)
 app.use('/auth', authRoutes)
+app.use('/tags', tagRoutes)
 
 app.get('/', (req, res) => {
     res.render('home')
