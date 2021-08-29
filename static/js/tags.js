@@ -41,4 +41,8 @@ $(document).ready(function () {
             checkedTagId = []
         }
     })
+    
+    $('#tags-table').DataTable( {
+        "order": [[ 0, "asc" ]]
+    } );
 })
