@@ -4,13 +4,13 @@ const { cloudinary } = require('../cloudinary')
 
 module.exports.index = async (req, res) => {
     const posts = await Post.find({}).sort().sort({ createdAt: 'desc' }).populate('tags')
-    const tags = await Tag.find({})
+    const tags = await Tag.find({}).sort({ body: 'asc'})
     const currUser = req.user
     res.render('posts/index', { posts, tags, currUser })
 }
 
 module.exports.renderNewForm = async (req, res) => {
-    const tags = await Tag.find({})
+    const tags = await Tag.find({}).sort({ body: 'asc'})
     res.render('posts/new', { tags })
 }
 
@@ -28,7 +28,7 @@ module.exports.createPost = async (req, res) => {
 }
 
 module.exports.showPost = async (req, res) => {
-    const tags = await Tag.find({})
+    const tags = await Tag.find({}).sort({ body: 'asc'})
     try {
         let post = await Post.findById(req.params.id)
         if (!post) {
@@ -52,7 +52,7 @@ module.exports.randomPost = async (req, res) => {
     const postsCount = await Post.estimatedDocumentCount()
     const random = Math.floor(Math.random() * postsCount)
     const currUser = req.user
-    const tags = await Tag.find()
+    const tags = await Tag.find({}).sort({ body: 'asc'})
     const post = await Post.findOne().skip(random).populate('tags').populate('author').populate({
         path: 'comments',
         populate: {
