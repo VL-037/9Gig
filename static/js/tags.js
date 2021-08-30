@@ -44,5 +44,5 @@ $(document).ready(function () {
     
     $('#tags-table').DataTable( {
         "order": [[ 0, "asc" ]]
-    } );
+    });
 })
