@@ -2,11 +2,25 @@ const Post = require('../models/post')
 const Tag = require('../models/tag')
 const { cloudinary } = require('../cloudinary')
 
+let seenIds = []
 module.exports.index = async (req, res) => {
-    const posts = await Post.find({}).sort().sort({ createdAt: 'desc' }).populate('tags')
+    seenIds = []
+    const posts = await Post.find({"_id": { "$nin": seenIds } }).sort().sort({ createdAt: 'desc' }).populate('tags').limit(3)
+    posts.forEach(p => {
+        seenIds.push(p._id)
+    })
     const tags = await Tag.find({}).sort({ body: 'asc'})
     const currUser = req.user
     res.render('posts/index', { posts, tags, currUser })
+}
+
+module.exports.getMorePosts = async (req, res) => {
+    const posts = await Post.find({"_id": { "$nin": seenIds } }).sort().sort({ createdAt: 'desc' }).populate('tags').limit(3)
+    posts.forEach(p => {
+        seenIds.push(p._id)
+    })
+    const currUser = req.user
+    res.send({ posts, currUser })
 }
 
 module.exports.renderNewForm = async (req, res) => {
