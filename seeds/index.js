@@ -31,20 +31,24 @@ const seedDB = async () => {
     //     })
     //     await newTag.save()
     // }
-    for(var i=0 ; i<2 ; i++){
+    for(var i=0 ; i<20 ; i++){
         const post = new Post({
-            title: `Post ${i}`,
+            title: `Post ${i+1}`,
             images: [
                 {
-                    url: 'https://res.cloudinary.com/qksicphhr/image/upload/v1629719399/9Gig/ayz1oshyjawad7rqrudb.webp',
+                    url: 'https://res.cloudinary.com/qksicphhr/image/upload/v1629719399/9Gig/ayz1oshyjawad7rqrudb.webp', // up to your data
                     filename: '9Gig/9Gig_Seeds_Img'
                 }
             ],
             upvoteNum:0,
             downvoteNum:0,
-            author: '6123896b6d7bcf2798cdd6b5',
-            tags: [
-                '612763292f3f054244e0ed7e',
+            author: '612cbdd7df5ea4412c173e11', // up to your data
+            tags: [ // up to your data
+                {
+                    _id: '612ca57b346cf43a10c2598c',
+                    body: 'Ask 9GAG',
+                    url: 'ask-9gag'
+                }
             ]
         })
         await post.save()
