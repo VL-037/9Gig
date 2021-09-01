@@ -15,6 +15,8 @@ router.get('/new', isLoggedIn, posts.renderNewForm)
 
 router.get('/random', posts.randomPost)
 
+router.get('/more', posts.getMorePosts)
+
 router.get('/:id/edit', isLoggedIn, posts.renderEditForm)
 
 router.route('/:id')
