@@ -5,17 +5,17 @@ const { cloudinary } = require('../cloudinary')
 let seenIds = []
 module.exports.index = async (req, res) => {
     seenIds = []
-    const posts = await Post.find({"_id": { "$nin": seenIds } }).sort().sort({ createdAt: 'desc' }).populate('tags').limit(3)
+    const posts = await Post.find({ "_id": { "$nin": seenIds } }).sort().sort({ createdAt: 'desc' }).populate('tags').limit(3)
     posts.forEach(p => {
         seenIds.push(p._id)
     })
-    const tags = await Tag.find({}).sort({ body: 'asc'})
+    const tags = await Tag.find({}).sort({ body: 'asc' })
     const currUser = req.user
     res.render('posts/index', { posts, tags, currUser })
 }
 
 module.exports.getMorePosts = async (req, res) => {
-    const posts = await Post.find({"_id": { "$nin": seenIds } }).sort().sort({ createdAt: 'desc' }).populate('tags').limit(3)
+    const posts = await Post.find({ "_id": { "$nin": seenIds } }).sort().sort({ createdAt: 'desc' }).populate('tags').limit(3)
     posts.forEach(p => {
         seenIds.push(p._id)
     })
@@ -24,7 +24,7 @@ module.exports.getMorePosts = async (req, res) => {
 }
 
 module.exports.renderNewForm = async (req, res) => {
-    const tags = await Tag.find({}).sort({ body: 'asc'})
+    const tags = await Tag.find({}).sort({ body: 'asc' })
     res.render('posts/new', { tags })
 }
 
@@ -42,14 +42,14 @@ module.exports.createPost = async (req, res) => {
 }
 
 module.exports.showPost = async (req, res) => {
-    const tags = await Tag.find({}).sort({ body: 'asc'})
+    const tags = await Tag.find({}).sort({ body: 'asc' })
     try {
-        let post = await Post.findById(req.params.id)
+        let post = await Post.findById(req.params.id || post._id)
         if (!post) {
             res.render('errors/404')
         } else {
             const currUser = req.user
-            post = await Post.findById(req.params.id).populate('tags').populate('author').populate({
+            post = await Post.findById(req.params.id || post._id).populate('tags').populate('author').populate({
                 path: 'comments',
                 populate: {
                     path: 'author'
@@ -65,15 +65,8 @@ module.exports.showPost = async (req, res) => {
 module.exports.randomPost = async (req, res) => {
     const postsCount = await Post.estimatedDocumentCount()
     const random = Math.floor(Math.random() * postsCount)
-    const currUser = req.user
-    const tags = await Tag.find({}).sort({ body: 'asc'})
-    const post = await Post.findOne().skip(random).populate('tags').populate('author').populate({
-        path: 'comments',
-        populate: {
-            path: 'author'
-        }
-    })
-    res.render('posts/show', { post, tags, currUser })
+    const post = await Post.findOne().skip(random)
+    res.redirect(`${post._id}`)
 }
 
 module.exports.renderEditForm = async (req, res) => {
