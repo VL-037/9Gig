@@ -4,7 +4,7 @@ $(document).ready(function () {
     $(window).scroll(function () {
         var position = Math.floor($(window).scrollTop()+1)
         var height = $(document).height() - $(window).height()
-        if (position >= height) {
+        if (position >= height && (window.location.pathname === ('/posts') || window.location.pathname === ('/posts/'))) {
             getMorePost('/posts/more').then(function (d) {
                 let posts = d.posts
                 let currentUser = d.currUser
@@ -207,6 +207,9 @@ function alwaysOn() {
 function getMorePost(ajaxUrl) {
     return $.ajax({
         url: ajaxUrl,
-        type: 'GET'
+        type: 'GET',
+        success: function (){
+            console.log(window.location.pathname)
+        }
     })
 }
