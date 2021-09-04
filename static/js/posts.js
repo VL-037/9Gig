@@ -207,9 +207,6 @@ function alwaysOn() {
 function getMorePost(ajaxUrl) {
     return $.ajax({
         url: ajaxUrl,
-        type: 'GET',
-        success: function (){
-            console.log(window.location.pathname)
-        }
+        type: 'GET'
     })
 }
