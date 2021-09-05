@@ -3,13 +3,16 @@
         <div class="card w-100">
             <ul class="card-body">
                 <div class="mb-5">
+                    <b class="card-title">Popular</b>
+                    <% for(let pt of popularTags) { %> 
+                        <li><a href="/<%=pt.url%>" class="tags"><%=pt.body%></a></li>
+                    <% } %> 
+                </div>
+                <div class="mb-5">
                     <b class="card-title">All Sections</b>
                     <% for(let tag of tags) { %> 
                         <li><a href="/<%=tag.url%>" class="tags"><%=tag.body%></a></li>
                     <% } %> 
-                </div>
-                <div class="mb-5">
-                    <b class="card-title"></b>
                 </div>
             </ul>
         </div>

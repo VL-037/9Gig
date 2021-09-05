@@ -9,9 +9,10 @@ module.exports.index = async (req, res) => {
     posts.forEach(p => {
         seenIds.push(p._id)
     })
+    const popularTags = await Tag.find({}).sort({ countNum: 'desc' }).limit(15).sort({ body: 'asc' })
     const tags = await Tag.find({}).sort({ body: 'asc' })
     const currUser = req.user
-    res.render('posts/index', { posts, tags, currUser })
+    res.render('posts/index', { posts, tags, popularTags, currUser })
 }
 
 module.exports.getMorePosts = async (req, res) => {
@@ -39,7 +40,7 @@ module.exports.createPost = async (req, res) => {
     await post.save()
 
     const tags = req.body.post.tags
-    for(let tag_id of tags){
+    for (let tag_id of tags) {
         let tag = await Tag.findById(tag_id)
         tag.countNum++
         await tag.save()
@@ -62,7 +63,8 @@ module.exports.showPost = async (req, res) => {
                     path: 'author'
                 }
             })
-            res.render('posts/show', { post, tags, currUser })
+            const popularTags = await Tag.find({}).sort({ countNum: 'desc' }).limit(15).sort({ body: 'asc' })
+            res.render('posts/show', { post, tags, popularTags, currUser })
         }
     } catch (e) {
         return res.render('errors/404')
@@ -102,7 +104,7 @@ module.exports.deletePost = async (req, res) => {
     if (!post) {
         res.render('errors/404')
     } else {
-        for(let tag_id of post.tags){
+        for (let tag_id of post.tags) {
             var tag = await Tag.findById(tag_id)
             tag.countNum--;
             await tag.save()
