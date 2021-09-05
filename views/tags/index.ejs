@@ -12,6 +12,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Tag _id</th>
                     <th scope="col">Tag body</th>
+                    <th scope="col">Number of use</th>
                     <th scope="col">Tools</th>
                 </tr>
             </thead>
@@ -21,6 +22,7 @@
                     <th scope="row"><%=i+1%></td>
                     <td><%=tags[i]._id%></td>
                     <td><%=tags[i].body%></td>
+                    <th><%=tags[i].countNum%></th>
                     <td>
                         <button class="btn btn-warning">Edit</button>
                     </td>

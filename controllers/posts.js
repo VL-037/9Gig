@@ -37,6 +37,13 @@ module.exports.createPost = async (req, res) => {
     post.downvote = []
     post.downvoteNum = 0
     await post.save()
+
+    const tags = req.body.post.tags
+    for(let tag_id of tags){
+        let tag = await Tag.findById(tag_id)
+        tag.countNum++
+        await tag.save()
+    }
     req.flash('success', 'Post created!')
     res.redirect(`/posts/${post._id}`)
 }
@@ -95,6 +102,11 @@ module.exports.deletePost = async (req, res) => {
     if (!post) {
         res.render('errors/404')
     } else {
+        for(let tag_id of post.tags){
+            var tag = await Tag.findById(tag_id)
+            tag.countNum--;
+            await tag.save()
+        }
         for (let image of post.images) {
             await cloudinary.uploader.destroy(image.filename)
         }
