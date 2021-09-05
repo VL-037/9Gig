@@ -21,7 +21,7 @@ $(document).ready(function () {
                                                 `<a href="/posts/${post._id}" class="text-decoration-none text-dark" data-placement="top">${post.title}</a>` +
                                             `</b>` +
                                         `</h5>` +
-                                        `<div id="postCarousel" class="carousel slide" data-bs-ride="carousel">` +
+                                        `<div id="${post._id}" class="carousel slide" data-bs-ride="carousel">` +
                                         `<div class="carousel-inner mb-3">`
                     post.images.forEach((img, i) => {
                         if (i === 0) {
@@ -39,11 +39,11 @@ $(document).ready(function () {
 
                     if (post.images.length > 1) {
                         postsHTML +=
-                            `<a class="carousel-control-prev" href="#postCarousel" role="button" data-slide="prev">
+                            `<a class="carousel-control-prev" href="#${post._id}" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Previous</span>
                             </a>
-                            <a class="carousel-control-next" href="#postCarousel" role="button" data-slide="next">
+                            <a class="carousel-control-next" href="#${post._id}" role="button" data-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Next</span>
                             </a>`
@@ -207,9 +207,6 @@ function alwaysOn() {
 function getMorePost(ajaxUrl) {
     return $.ajax({
         url: ajaxUrl,
-        type: 'GET',
-        success: function (){
-            console.log(window.location.pathname)
-        }
+        type: 'GET'
     })
 }
