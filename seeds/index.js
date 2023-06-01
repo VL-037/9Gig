@@ -23,36 +23,36 @@ db.once("open", () => {
 const seedDB = async () => {
     await Comment.deleteMany({})
     await Post.deleteMany({})
-    // await Tag.deleteMany({})
-    // for(var i=0 ; i<tags.tags.length ; i++){
-    //     const newTag = new Tag({
-    //         body: tags.tags[i],
-    //         url: tags.tags[i].toLowerCase().replace(/\s/g, "-")
-    //     })
-    //     await newTag.save()
-    // }
-    for(var i=0 ; i<20 ; i++){
-        const post = new Post({
-            title: `Post ${i+1}`,
-            images: [
-                {
-                    url: 'https://res.cloudinary.com/qksicphhr/image/upload/v1629719399/9Gig/ayz1oshyjawad7rqrudb.webp', // up to your data
-                    filename: '9Gig/9Gig_Seeds_Img'
-                }
-            ],
-            upvoteNum:0,
-            downvoteNum:0,
-            author: '612cbdd7df5ea4412c173e11', // up to your data
-            tags: [ // up to your data
-                {
-                    _id: '612ca57b346cf43a10c2598c',
-                    body: 'Ask 9GAG',
-                    url: 'ask-9gag'
-                }
-            ]
+    await Tag.deleteMany({})
+    for(var i=0 ; i<tags.tags.length ; i++){
+        const newTag = new Tag({
+            body: tags.tags[i],
+            url: tags.tags[i].toLowerCase().replace(/\s/g, "-")
         })
-        await post.save()
+        await newTag.save()
     }
+    // for(var i=0 ; i<20 ; i++){
+    //     const post = new Post({
+    //         title: `Post ${i+1}`,
+    //         images: [
+    //             {
+    //                 url: 'https://res.cloudinary.com/qksicphhr/image/upload/v1629719399/9Gig/ayz1oshyjawad7rqrudb.webp', // up to your data
+    //                 filename: '9Gig/9Gig_Seeds_Img'
+    //             }
+    //         ],
+    //         upvoteNum:0,
+    //         downvoteNum:0,
+    //         author: '6454e9de27c69000145e6b82', // up to your data
+    //         tags: [ // up to your data
+    //             {
+    //                 _id: '6454ea1027c69000145e6b91',
+    //                 body: 'Funny',
+    //                 url: 'funny'
+    //             }
+    //         ]
+    //     })
+    //     await post.save()
+    // }
 }
 
 seedDB().then(() => {
