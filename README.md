@@ -1,8 +1,12 @@
 # 9Gig
 
-This is a mini version of https://9gag.com/ using nodejs and express.
+This is a mini version of https://9gag.com using nodejs and express.
 
-Heroku link: https://stormy-chamber-78557.herokuapp.com
+&rarr; https://vinc-9gig.up.railway.app
+
+### Preview
+
+https://github.com/VL-037/9Gig/assets/68309124/264ff497-4f3c-42a8-86ec-9d211f484922
 
 ### To run this project, please do the following:
 
